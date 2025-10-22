@@ -1,0 +1,1 @@
+communication between go routines is done via channels.
