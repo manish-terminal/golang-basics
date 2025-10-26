@@ -35,7 +35,7 @@ func isEmpty(c *Course) bool {
 
 // serve home router
 func serveHome(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("<h1>You have created ur first api </h1>"))
+	w.Write([]byte("<h1>You have created first api </h1>"))
 }
 
 func getAllCourses(w http.ResponseWriter, r *http.Request) {
@@ -125,7 +125,7 @@ func updateOneCourse(w http.ResponseWriter, r *http.Request) {
 //append course into courses
 
 func main() {
-	fmt.Println("Hey from main function")
+	fmt.Println("Hello from main function ")
 	r := mux.NewRouter()
 	course = append(course, Course{CourseID: "2", CourseName: "ReactJS", CoursePrice: 299, Author: &Author{FullName: "Manish Gupta", Website: "manish-terminal"}})
 	course = append(course, Course{CourseID: "4", CourseName: "JS", CoursePrice: 299, Author: &Author{FullName: "Manish Gupta", Website: "manish-terminal"}})
@@ -139,3 +139,5 @@ func main() {
 	log.Fatal(http.ListenAndServe(":4000", r))
 
 }
+//auto reload like nodemon for nodejs is there any ? yes airgo install -v github.com/cosmtrek/air@latest and air init and air run
+
