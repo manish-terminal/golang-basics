@@ -7,7 +7,9 @@ import (
 	"time"
 )
 
+var signals []string
 var wg sync.WaitGroup
+var mut sync.Mutex
 
 func main() {
 	defer wg.Done()
@@ -36,9 +38,8 @@ func main() {
 		go getStatusCode(website)
 		wg.Add(1)
 	}
-	time.Sleep(2 * time.Second) //for waiting all go routines to complete
-	
-
+	// time.Sleep(2 * time.Second) //for waiting all go routines to complete
+	wg.Wait()
 }
 
 func Greeter(s string) {
@@ -47,14 +48,15 @@ func Greeter(s string) {
 	}
 }
 
-func getStatusCode(endpoint string) int {
+func getStatusCode(endpoint string) {
 	resp, err := http.Get(endpoint)
 	if err != nil {
 		// fmt.Println("Status Code:", resp.StatusCode)
 		fmt.Println("Error:", err)
-		return 0
+		return
+	} else {
+		mut.Lock()
+		defer mut.Unlock()
+		signals = append(signals, resp.Status)
 	}
-	defer resp.Body.Close()
-	fmt.Println("Status Code:", resp.StatusCode)
-	return resp.StatusCode
 }
